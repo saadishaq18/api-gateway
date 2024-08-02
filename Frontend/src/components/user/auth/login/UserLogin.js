@@ -32,26 +32,26 @@ export const UserLogin = () => {
   const navigate = useNavigate();
 
   const [credentials, setCredentials] = useState({
-    email: "",
+    credential: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false)
   const [validationErrorsBackend, setValidationErrorsBackend] = useState([])
 
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .matches(/^\S+@\S+\.\S+$/, "Please enter valid email")
-      .required("Email is required")
-      .max(50,"Email must be less than 50 characters"),
-    password: yup
-      .string()
-      .required("Password is required")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,15}$/,
-        "Password must contain between 6 and 15 characters, including at least one uppercase letter, one lowercase letter, and one number"
-      )
-  });
+  // const schema = yup.object().shape({
+  //   email: yup
+  //     .string()
+  //     .matches(/^\S+@\S+\.\S+$/, "Please enter valid email")
+  //     .required("Email is required")
+  //     .max(50,"Email must be less than 50 characters"),
+  //   password: yup
+  //     .string()
+  //     .required("Password is required")
+  //     .matches(
+  //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,15}$/,
+  //       "Password must contain between 6 and 15 characters, including at least one uppercase letter, one lowercase letter, and one number"
+  //     )
+  // });
   
   const [errors, setErrors] = useState({});
   // const [isBlur, setIsBlur] = useState(false);
@@ -65,7 +65,7 @@ export const UserLogin = () => {
     });
 
     try {
-      await schema.validateAt(name, {[name]: value})
+      // await schema.validateAt(name, {[name]: value})
 
       //if Validation Passes
       setErrors(prevError => ({
@@ -85,7 +85,7 @@ export const UserLogin = () => {
     e.preventDefault();
     try {
       dispatch(loginRequest());
-      await schema.validate(credentials, {abortEarly:false})
+      // await schema.validate(credentials, {abortEarly:false})
       const response = await axios.post(
         `${process.env.REACT_APP_GATEWAY_URL}/api/auth/login`,
         credentials
@@ -258,8 +258,8 @@ export const UserLogin = () => {
                         <input
                           className="form-control"
                           type="text"
-                          name="email"
-                          value={credentials.email}
+                          name="credential"
+                          value={credentials.credential}
                           onChange={handleOnchange}
                         />
                         {
