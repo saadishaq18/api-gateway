@@ -24,7 +24,7 @@ const permissionSchema = new mongoose.Schema({
         type: String
     },
     description:{
-        type:Text
+        type: String
     },
     is_web: {
         type: Boolean
@@ -40,5 +40,22 @@ const permissionSchema = new mongoose.Schema({
 }, {
     timestamps: true
 })
+
+//Implementing soft delete
+permissionSchema.methods.softDelete = function(){
+    this.deletedAt = new Date()
+    return this.save()
+}
+
+//Restoring soft delete
+permissionSchema.methods.restore = function(){
+    this.deletedAt = null
+    return this.save()
+}
+
+//Added a custom query
+permissionSchema.query.notDeleted = function() {
+    return this.where({deletedAt: null})
+}
 
 module.exports = mongoose.model("Permission", permissionSchema)

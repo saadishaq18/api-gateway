@@ -4,11 +4,15 @@ const generateError = require('../utils/errorHandler')
 
 const createPermission = async function (permissionData) {
     try {
+       
         const { permission_name } = permissionData
-        const existingPermission = Permission.findOne({
-            permission_name: permission_name
+        
+        const existingPermission = await Permission.findOne({
+            permission_name: permission_name,
+            deletedAt: null
         })
         if (existingPermission) {
+            
             throw generateError('Permission already exists', 400)
         }
 
@@ -29,6 +33,7 @@ const createPermission = async function (permissionData) {
 const getAllPermissions = async function () {
     try {
         const permissions = await Permission.find({ deletedAt: null })
+        // console.log(permissions)
         return permissions
     } catch (error) {
         throw error
@@ -74,7 +79,7 @@ const updatePermission = async function (permissionId, permissionData) {
 
 const deletePermission = async function (permissionId) {
     try {
-        const permission = Permission.findOne({
+        const permission = await Permission.findOne({
             _id: permissionId,
             deletedAt: null
         })

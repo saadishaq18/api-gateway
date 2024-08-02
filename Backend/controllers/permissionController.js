@@ -1,6 +1,6 @@
 const {createPermission, getAllPermissions, getPermissionById, updatePermission, deletePermission} = require('../services/permissionService')
 
-const addPermisssion = async function(req, res, next){
+const addPermission = async function(req, res, next){
     try {
        const response = await createPermission(req.body)
        res.status(201).json(response)
@@ -36,4 +36,19 @@ const permissionUpdate = async function(req, res, next){
     }
 }
 
-const removePermission = 
+const removePermission = async function(req, res, next){
+    try {
+        const response = await deletePermission(req.params.id)
+        res.status(200).json(response)
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {
+    addPermission,
+    getPermission,
+    getPermissions,
+    permissionUpdate,
+    removePermission
+}
