@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken')
-const {generateError} = require('../utils/errorHandler')
-const config = require('../config/default')
+const generateError = require('../../utils/errorHandler')
+const config = require('../../config/default')
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = function(req, res, next) {
     const authHeader = req.headers.authorization
 
-    if(!authHeader || !authHeader.startWith('Bearer')){
+    if(!authHeader || !authHeader.startsWith('Bearer')){
         return next(generateError('Unauthorized - You are not authorized'), 401)
     }
 

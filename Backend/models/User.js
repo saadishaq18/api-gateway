@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
 })
 
 //Encrypting the Password and save it in Database
-userSchema.pre('save', async (next)=> {
+userSchema.pre('save', async function(next) {
     if(!this.isModified('password')) return next()
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
@@ -51,7 +51,7 @@ userSchema.pre('save', async (next)=> {
 })
 
 //Decrypting the password
-userSchema.methods.matchPassword = async (password) => {
+userSchema.methods.matchPassword = async function(password){
     return await bcrypt.compare(password, this.password)
 }
 
@@ -68,19 +68,19 @@ userSchema.methods.restore = () => {
 }
 
 //Added a custom query
-userSchema.query.notDeleted = () => {
+userSchema.query.notDeleted = function() {
     return this.where({deletedAt: null})
 }
 
 //filtered the deleted data
-userSchema.pre('find', (next)=> {
-    return this.where({deletedAt: null})
-    next()
-})
+// userSchema.pre('find', function(next){
+//     return this.where({deletedAt: null})
+//     next()
+// })
 
-userSchema.pre('findOne', (next)=>{
-    return this.where({deletedAt: null})
-    next()
-})
+// userSchema.pre('findOne', function(next){
+//     return this.where({deletedAt: null})
+//     next()
+// })
 
 module.exports = mongoose.model('User', userSchema)

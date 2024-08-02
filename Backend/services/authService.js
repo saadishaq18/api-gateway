@@ -38,13 +38,14 @@ const loginUser = async (userData) => {
                 {email:credential},
                 {nic: credential},
                 {username: credential}
-            ]
+            ],
+            deletedAt: null
         })
         if(!user){
             throw generateError("Invalid credentials", 401)
         }
 
-        const isMatch = User.matchPassword(password)
+        const isMatch = user.matchPassword(password)
         if(!isMatch){
             throw generateError("Invalid credentials", 401)
         }

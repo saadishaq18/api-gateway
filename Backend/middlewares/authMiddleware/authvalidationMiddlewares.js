@@ -29,7 +29,7 @@ const registerValidations = [
         .notEmpty().withMessage("Phone number is required")
         .bail()
         .matches(/^\d{4}-\d{7}$/).withMessage('Enter a valid phone number in the format xxxx-xxxxxxx'),
-    check('cnic')
+    check('nic')
         .notEmpty().withMessage('CNIC is required')
         .bail()
         .matches(/^\d{5}-\d{7}-\d$/).withMessage('Enter a valid CNIC number in the format xxxxx-xxxxxxx-x'),
@@ -49,10 +49,10 @@ const registerValidations = [
 ]
 
 const loginValidations = [
-    check('email')
-        .notEmpty().withMessage('Email is required')
-        .bail()
-        .isEmail().withMessage('Enter a valid email'),
+    check('credential')
+        .notEmpty().withMessage('Credentials is required')
+        .bail(),
+        // .isEmail().withMessage('Enter a valid credentials'),
         // .isLength({ max: 50 }).withMessage('Email cannot be longer than 50 characters'),
 
     check('password')
