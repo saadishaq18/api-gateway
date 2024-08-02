@@ -56,13 +56,13 @@ userSchema.methods.matchPassword = async function(password){
 }
 
 //Implementing soft delete
-userSchema.methods.softDelete = () => {
+userSchema.methods.softDelete = function(){
     this.deletedAt = new Date()
     return this.save()
 }
 
 //Restoring soft delete
-userSchema.methods.restore = () => {
+userSchema.methods.restore = function(){
     this.deletedAt = null
     return this.save()
 }

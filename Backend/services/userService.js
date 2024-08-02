@@ -44,14 +44,15 @@ const updateUser = async (userId, updateData) => {
 // Soft delete user
 const deleteUser = async (userId) => {
     try {
-        const user = await User.findOneAndUpdate(
+        const user = await User.findOne(
             { _id: userId, deletedAt: null },
-            { $set: { deletedAt: new Date() } },
-            { new: true }
+            // { $set: { deletedAt: new Date() } },
+            // { new: true }
         )
         if (!user) {
             throw generateError("User not found", 404)
         }
+        user.softDelete()
         return { message: "User deleted successfully" }
     } catch (error) {
         throw error
