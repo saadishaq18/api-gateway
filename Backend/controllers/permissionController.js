@@ -11,7 +11,7 @@ const addPermission = async function(req, res, next){
 
 const getPermissions = async function(req, res, next){
     try {
-        const response = await getAllPermissions(req.body)
+        const response = await getAllPermissions()
         res.status(200).json(response)
     } catch (error) {
         next(error)

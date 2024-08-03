@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const Schema = mongoose.Schema
 
 const userSchema = new mongoose.Schema({
     firstname: {
@@ -32,6 +33,18 @@ const userSchema = new mongoose.Schema({
     phonenumber: {
         type: String,
         required: true
+    },
+    group: {
+        type: Schema.Types.ObjectId,
+        ref: 'Group'
+    },
+    role:{
+        type: Schema.Types.ObjectId,
+        ref: 'Role'
+    },
+    permissions:{
+        type: Schema.Types.ObjectId,
+        ref: 'Permission'
     },
     deletedAt: {
         type: Date,

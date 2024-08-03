@@ -22,7 +22,7 @@ const createPermission = async function (permissionData) {
 
         await newPermission.save()
         return {
-            message: "Permissions created successfully",
+            message: "Permission created successfully",
             permissions: newPermission
         }
     } catch (error) {

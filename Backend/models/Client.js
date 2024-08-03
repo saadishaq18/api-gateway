@@ -1,15 +1,13 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
 
-const roleSchema = new mongoose.Schema({
-    role_name:{
-        type:String,
+const clientSchema = new mongoose.Schema({
+    client_name:{
+        type: String,
         required: true
     },
-    permissions:[{
-        type: Schema.Types.ObjectId,
-        ref: 'Permission'
-    }],
+    secret_key:{
+        type: String,
+    },
     deletedAt: {
         type: Date,
         default: null
@@ -19,20 +17,20 @@ const roleSchema = new mongoose.Schema({
 })
 
 //Implementing soft delete
-roleSchema.methods.softDelete = function(){
+clientSchema.methods.softDelete = function(){
     this.deletedAt = new Date()
     return this.save()
 }
 
 //Restoring soft delete
-roleSchema.methods.restore = function(){
+clientSchema.methods.restore = function(){
     this.deletedAt = null
     return this.save()
 }
 
 //Added a custom query
-roleSchema.query.notDeleted = function() {
+clientSchema.query.notDeleted = function() {
     return this.where({deletedAt: null})
 }
 
-module.exports = mongoose.model("Role", roleSchema)
+module.exports = mongoose.model('Client', clientSchema)
