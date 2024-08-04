@@ -38,25 +38,25 @@ export const UserLogin = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [validationErrorsBackend, setValidationErrorsBackend] = useState([])
 
-  // const schema = yup.object().shape({
-  //   email: yup
-  //     .string()
-  //     .matches(/^\S+@\S+\.\S+$/, "Please enter valid email")
-  //     .required("Email is required")
-  //     .max(50,"Email must be less than 50 characters"),
-  //   password: yup
-  //     .string()
-  //     .required("Password is required")
-  //     .matches(
-  //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,15}$/,
-  //       "Password must contain between 6 and 15 characters, including at least one uppercase letter, one lowercase letter, and one number"
-  //     )
-  // });
+  const schema = yup.object().shape({
+    credential: yup
+      .string()
+      // .matches(/^\S+@\S+\.\S+$/, "Please enter valid email")
+      .required("Credential is required"),
+      // .max(50,"Email must be less than 50 characters"),
+    password: yup
+      .string()
+      .required("Password is required")
+      // .matches(
+      //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,15}$/,
+      //   "Password must contain between 6 and 15 characters, including at least one uppercase letter, one lowercase letter, and one number"
+      // )
+  });
   
   const [errors, setErrors] = useState({});
   // const [isBlur, setIsBlur] = useState(false);
   
-
+  
   const handleOnchange = async (e) => {
     const { name, value } = e.target;
     setCredentials({
