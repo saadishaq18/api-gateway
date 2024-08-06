@@ -21,32 +21,38 @@ const authMiddleware = function(req, res, next) {
     }
 }
 
-const verifyRole = (roleName) => {
+const verifyRole = (roleName, permissions = []) => {
     return async (req, res, next) => {
         try {
+            // Check if the role is already present in the request body
             if (!req.body.role) {
-                const role = await Role.findOne({ role_name: roleName });
-                if (!role) {
-                    if(roleName === 'SuperAdmin'){
-                        const newRole = new Role({
-                            role_name: roleName,
-                            // Add permissions if provided
-                            permissions: permissions || []
-                        });
+                // Check if the role exists in the database
+                let role = await Role.findOne({ role_name: roleName, deletedAt: null });
                 
-                        // Save the role
-                        await newRole.save();
-                        const role = await Role.findOne({ role_name: roleName });
-                        req.body.role = role._id;
-                        next();
-                    }
+                // If role does not exist and the roleName is 'SuperAdmin'
+                if (!role && roleName === 'SuperAdmin') {
+                    // Create the new role with provided permissions
+                    const newRole = new Role({
+                        role_name: roleName,
+                        permissions: permissions
+                    });
 
-                    else{
-                    return next(generateError(`${roleName} role not found`, 400));
-                    }
+                    // Save the new role
+                    await newRole.save();
+
+                    // Fetch the newly created role
+                    role = await Role.findOne({ role_name: roleName, deletedAt: null });
                 }
+
+                // If role still does not exist (either non-SuperAdmin role or failed creation)
+                if (!role) {
+                    return next(generateError(`Something went wrong, unable to register`, 400));
+                }
+
+                // Assign the role ID to the request body
                 req.body.role = role._id;
             }
+
             next();
         } catch (error) {
             next(generateError(`Error verifying ${roleName} role`, 500));

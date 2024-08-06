@@ -3,33 +3,6 @@ const Role = require('@models/Roles')
 const generateError = require('@utils/errorHandler')
 
 //Create a role
-// const createRole = async function (roleData) {
-//     const { role_name } = roleData
-//     try {
-//         const existingRole = await Role.findOne({
-//             role_name,
-//             deletedAt: null
-//         })
-//         if (existingRole) {
-//             throw generateError('Role already exists', 400)
-//         }
-//         const newRole = new Role({
-//             ...roleData
-//         })
-
-//         await newRole.save()
-
-//         return {
-//             message: "Role created successfully",
-//             role: newRole
-//         }
-
-//     } catch (error) {
-//         throw error
-//     }
-
-// }
-
 const createRole = async function (roleData) {
     const { role_name, permissions } = roleData;
     try {
@@ -80,24 +53,14 @@ const createRole = async function (roleData) {
 };
 
 //Get all roles
-// const getAllRoles = async () => {
-//     try {
-//         const roles = await Role.find({
-//             deletedAt: null
-//         })
-
-//         return roles
-//     } catch (error) {
-//         throw error
-//     }
-// }
 const getAllRoles = async () => {
     try {
         // Fetch roles and populate the permissions field
         const roles = await Role.find({ deletedAt: null })
             .populate({
                 path: 'permissions', // The field in Role model that references Permission
-                match: { deletedAt: null } // Optional: Only include non-deleted permissions
+                match: { deletedAt: null },
+                select: 'permission_name _id' 
             });
 
             if (roles.length === 0) {
