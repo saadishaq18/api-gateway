@@ -1,9 +1,8 @@
-require('module-alias/register');
 const express = require('express')
 const config = require('@config/default')
-const connectDB = require('@config/database')
-const routes = require('@routes/index')
-const {errorHandler} = require('@middlewares/errorHandler')
+const connectDB = require('./config/database')
+const routes = require('./routes/index')
+const {errorHandler} = require('./middlewares/errorHandler')
 const cors = require('cors')
 
 
