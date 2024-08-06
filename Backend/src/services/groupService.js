@@ -34,6 +34,9 @@ const getAllGroups = async function () {
     try {
         const groups = await Group.find({ deletedAt: null })
         // console.log(groups)
+        if (!groups) {
+            throw generateError('Groups not found', 404)
+        }
         return groups
     } catch (error) {
         throw error
@@ -45,8 +48,8 @@ const getGroupById = async function (groupId) {
         const group = await Group.find({
             _id: groupId,
             deletedAt: null
-
         })
+        .populate({ path: 'roles', match: { deletedAt: null },   select: 'role_name _id'  });
         if (!group) {
             throw generateError('Group not found', 404)
         }

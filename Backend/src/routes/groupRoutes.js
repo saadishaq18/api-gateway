@@ -4,13 +4,13 @@ const {authMiddleware} = require('@middlewares/authMiddleware/authMiddleware')
 
 const router = express.Router()
 
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
 router.post('/', addGroup)
 router.get('/', getGroupsAll)
 router.get('/:id', getGroup)
-router.put('/:id', GroupUpdate)
-router.delete('/:id', removeGroup)
+router.put('/update/:id', GroupUpdate)
+router.delete('/delete/:id', removeGroup)
 router.post('/assign-roles', assignRolesToGroup)
 
 module.exports = router

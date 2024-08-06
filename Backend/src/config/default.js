@@ -10,5 +10,6 @@ module.exports ={
     mongoURI: process.env.MONGO_URI,
     timeZone: process.env.APP_TIMEZONE,
     language: process.env.APP_LANGUAGE,
-    jwtSecret: process.env.JWT_KEY
+    jwtSecret: process.env.JWT_KEY,
+    Meta_Data_Service: process.env.META_DATA_SERVICE,
 }

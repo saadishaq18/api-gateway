@@ -9,7 +9,7 @@ const router = express.Router()
 router.post('/', addPermission)
 router.get('/', getPermissions)
 router.get('/:id', getPermission)
-router.put('/:id', permissionUpdate)
-router.delete('/:id', removePermission)
+router.put('/update/:id', permissionUpdate)
+router.delete('/delete/:id', removePermission)
 
 module.exports = router
