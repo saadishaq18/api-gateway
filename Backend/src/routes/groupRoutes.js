@@ -1,5 +1,5 @@
 const express = require('express')
-const {getGroupsAll,getGroup, addGroup, GroupUpdate, removeGroup, assignRolesToGroup} =require('../controllers/groupController')
+const {getGroupsAll,getGroup, addGroup, GroupUpdate, removeGroup, assignRolesToGroup} =require('@controllers/groupController')
 const {authMiddleware} = require('@middlewares/authMiddleware/authMiddleware')
 
 const router = express.Router()

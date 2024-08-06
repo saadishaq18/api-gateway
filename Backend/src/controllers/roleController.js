@@ -1,5 +1,12 @@
-const {createRole, getAllRoles, getRoleById, updateRole,deleteRole, assignPermissionsToRole} = require('@services/roleService')
-
+require('module-alias/register');
+const {
+    createRole,
+    getAllRoles,
+    getRoleById,
+    updateRole,
+    deleteRole,
+    assignPermissionsToRole
+} = require('@services/roleService');
 const addRole = async (req, res, next) => {
     try {
         const response = await createRole(req.body)

@@ -116,6 +116,7 @@ const getRoleById = async (roleId) => {
             _id: roleId,
             deletedAt: null
         })
+        .populate({ path: 'permissions', match: { deletedAt: null } });
         if (!role) {
             throw generateError('Role not found', 404)
         }
@@ -184,7 +185,7 @@ const assignPermissionsToRole = async (roleId, permissionIds) => {
     }
 }
 
-module.export = {
+module.exports = {
     createRole,
     getAllRoles,
     getRoleById,

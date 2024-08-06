@@ -1,5 +1,5 @@
 const express = require('express')
-const {listUsers, getUser, update, removeUser} = require('../controllers/userController')
+const {listUsers, getUser, update, removeUser} = require('@controllers/userController')
 const {authMiddleware} = require('@middlewares/authMiddleware/authMiddleware')
 
 const router = express.Router()

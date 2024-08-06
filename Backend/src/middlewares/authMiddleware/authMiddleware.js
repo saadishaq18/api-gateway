@@ -25,9 +25,25 @@ const verifyRole = (roleName) => {
     return async (req, res, next) => {
         try {
             if (!req.body.role) {
-                const role = await Role.findOne({ name: roleName });
+                const role = await Role.findOne({ role_name: roleName });
                 if (!role) {
+                    if(roleName === 'SuperAdmin'){
+                        const newRole = new Role({
+                            role_name: roleName,
+                            // Add permissions if provided
+                            permissions: permissions || []
+                        });
+                
+                        // Save the role
+                        await newRole.save();
+                        const role = await Role.findOne({ role_name: roleName });
+                        req.body.role = role._id;
+                        next();
+                    }
+
+                    else{
                     return next(generateError(`${roleName} role not found`, 400));
+                    }
                 }
                 req.body.role = role._id;
             }

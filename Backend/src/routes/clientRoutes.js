@@ -1,5 +1,5 @@
 const express = require('express')
-const {addClient, getClientAll, getClient, clientUpdate, removeClient} = require('../controllers/clientController')
+const {addClient, getClientAll, getClient, clientUpdate, removeClient} = require('@controllers/clientController')
 const {authMiddleware} = require('@middlewares/authMiddleware/authMiddleware')
 
 const router = express.Router()
