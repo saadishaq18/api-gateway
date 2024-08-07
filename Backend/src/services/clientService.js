@@ -15,7 +15,7 @@ const createClient = async (clientData) => {{
         }
 
         const newClient = new Client({
-            ...Client
+            ...clientData
         })
 
         await newClient.save()
