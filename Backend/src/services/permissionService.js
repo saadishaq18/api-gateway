@@ -42,7 +42,7 @@ const getAllPermissions = async function () {
 
 const getPermissionById = async function (permissionId) {
     try {
-        const permission = await Permission.find({
+        const permission = await Permission.findOne({
             _id: permissionId,
             deletedAt: null
 
@@ -95,10 +95,68 @@ const deletePermission = async function (permissionId) {
     }
 }
 
+// Get Parent Permissions
+const getParentPermissions = async function() {
+    try {
+        const parentPermissions = await Permission.find({
+            parent_id: null,
+            deletedAt: null,
+            status: true
+        });
+        if (parentPermissions.length === 0) {
+            throw generateError('No parent permissions found', 404);
+        }
+        return parentPermissions;
+    } catch (error) {
+        throw error;
+    }
+};
+
+// Get All Parent Permissions with Their Children
+const getAllParentPermissionsWithChildren = async function() {
+    try {
+        const permissions = await Permission.aggregate([
+            {
+                $match: {
+                    parent_id: null,
+                    deletedAt: null,
+                    status: true
+                }
+            },
+            {
+                $lookup: {
+                    from: 'permissions',
+                    localField: '_id',
+                    foreignField: 'parent_id',
+                    as: 'children'
+                }
+            },
+            {
+                $match: {
+                    $or: [
+                        { "children.deletedAt": null },
+                        { "children": { $size: 0 } }
+                    ]
+                }
+            }
+        ]);
+
+        if (permissions.length === 0) {
+            throw generateError('No parent permissions found', 404);
+        }
+
+        return permissions;
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
     createPermission,
     getAllPermissions,
     getPermissionById,
     updatePermission,
-    deletePermission
+    deletePermission,
+    getParentPermissions,
+    getAllParentPermissionsWithChildren
 }

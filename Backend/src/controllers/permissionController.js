@@ -1,4 +1,4 @@
-const {createPermission, getAllPermissions, getPermissionById, updatePermission, deletePermission} = require('@services/permissionService')
+const {createPermission, getAllPermissions, getPermissionById, updatePermission, deletePermission, getParentPermissions, getAllParentPermissionsWithChildren } = require('@services/permissionService')
 
 const addPermission = async function(req, res, next){
     try {
@@ -12,6 +12,24 @@ const addPermission = async function(req, res, next){
 const getPermissions = async function(req, res, next){
     try {
         const response = await getAllPermissions()
+        res.status(200).json(response)
+    } catch (error) {
+        next(error)
+    }
+}
+
+const parentPermissions = async function(req, res, next){
+    try {
+        const response = await getParentPermissions()
+        res.status(200).json(response)
+    } catch (error) {
+        next(error)
+    }
+}
+
+const parentPermissionsWithChildren = async function(req, res, next){
+    try {
+        const response = await getAllParentPermissionsWithChildren()
         res.status(200).json(response)
     } catch (error) {
         next(error)
@@ -50,5 +68,7 @@ module.exports = {
     getPermission,
     getPermissions,
     permissionUpdate,
-    removePermission
+    removePermission,
+    parentPermissions,
+    parentPermissionsWithChildren,
 }
