@@ -8,7 +8,7 @@ router.use(authMiddleware);
 router.post('/', addClient)
 router.get('/', getClientAll)
 router.get('/:id', getClient)
-router.put('/:id', clientUpdate)
-router.delete('/:id', removeClient)
+router.put('/update/:id', clientUpdate)
+router.delete('/delete/:id', removeClient)
 
 module.exports = router

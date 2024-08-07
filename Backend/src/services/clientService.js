@@ -87,7 +87,7 @@ const updateClient = async (clientId, clientData) => {
 
 const deleteClient = async (clientId) => {
     try {
-        const client = Client.findOne({
+        const client = await Client.findOne({
             _id: clientId
         })
         if(!client){
