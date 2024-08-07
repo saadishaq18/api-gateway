@@ -35,7 +35,10 @@ const updateUser = async (userId, updateData) => {
         if (!user) {
             throw generateError("User not found", 404)
         }
-        return user
+        return {
+            message: "User updated successfully",
+            user: user
+        };
     } catch (error) {
         throw error
     }

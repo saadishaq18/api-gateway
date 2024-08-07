@@ -79,7 +79,7 @@ const getRoleById = async (roleId) => {
             _id: roleId,
             deletedAt: null
         })
-        .populate({ path: 'permissions', match: { deletedAt: null } });
+        .populate({ path: 'permissions', match: { deletedAt: null },   select: 'permission_name _id'  });
         if (!role) {
             throw generateError('Role not found', 404)
         }
@@ -108,7 +108,10 @@ const updateRole = async (roleId, roleData) => {
         if (!role) {
             throw generateError('Role not found', 404)
         }
-        return role
+        return {
+            message: "Role updated successfully",
+            role: role
+        };
     } catch (error) {
         throw error
     }

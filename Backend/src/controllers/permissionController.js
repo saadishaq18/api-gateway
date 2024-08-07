@@ -11,16 +11,16 @@ const addPermission = async function(req, res, next){
 
 const getPermissions = async function(req, res, next){
     try {
-        const response = await getAllPermissions()
+        const response = await  getAllPermissions()
         res.status(200).json(response)
     } catch (error) {
         next(error)
     }
 }
 
-const parentPermissions = async function(req, res, next){
+const getPermissionsParent = async function(req, res, next){
     try {
-        const response = await getParentPermissions()
+        const response = await  getParentPermissions()
         res.status(200).json(response)
     } catch (error) {
         next(error)
@@ -69,6 +69,6 @@ module.exports = {
     getPermissions,
     permissionUpdate,
     removePermission,
-    parentPermissions,
+    getPermissionsParent,
     parentPermissionsWithChildren,
 }

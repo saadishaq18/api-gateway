@@ -76,7 +76,10 @@ const updateClient = async (clientId, clientData) => {
         throw generateError("Client not found", 400)
     }
 
-    return client
+    return {
+        message: "Client updated successfully",
+        client: client
+    };
     } catch (error) {
         throw(error)
     }

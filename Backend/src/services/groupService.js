@@ -74,7 +74,10 @@ const updateGroup = async function (groupId, groupData) {
         if (!group) {
             throw generateError('Group not found', 404)
         }
-        return group
+        return {
+            message: "Group updated successfully",
+            group: group
+        };
     } catch (error) {
         throw error
     }

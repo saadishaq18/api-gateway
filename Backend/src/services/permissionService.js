@@ -71,7 +71,10 @@ const updatePermission = async function (permissionId, permissionData) {
         if (!permission) {
             throw generateError('Permission not found', 404)
         }
-        return permission
+        return {
+            message: "Permission Updated successfully",
+            permission: permission
+        };
     } catch (error) {
         throw error
     }
